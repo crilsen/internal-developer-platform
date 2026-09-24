@@ -2,7 +2,7 @@
 
 ## Active
 
-- Initialize the Git repository and publish it remotely after GitHub authentication is restored.
+- None.
 
 ## Planned
 
@@ -10,8 +10,9 @@
 
 ## Blocked
 
-- GitHub CLI authentication for account `crilsen` is invalid, so remote creation, description and topics cannot yet be applied.
+- None.
 
 ## Completed
 
 - Adopted the repository context and recorded the approved Backstage MVP plan.
+- Initialized Git, created the public GitHub repository and pushed `main`.

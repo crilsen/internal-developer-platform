@@ -2,27 +2,28 @@
 
 ## Resume block (read first)
 
-- Repo state: branch `main`, HEAD `542d2c3`, working tree expected clean after this checkpoint update
+- Repo state: branch `main`, tracking `origin/main`; working tree clean before this checkpoint update
 - Source of truth: `AGENTS.md` → `.ai/`
 - Budget / usage observed: `<unknown | value from the tool>`
 - Checkpoint updated: `2026-09-24`
-- Last goal: Adopt the template, record the Backstage MVP plan, and create the Git project.
-- Exact next action: Re-authenticate the GitHub CLI, create the remote repository, then apply the prepared description and topics.
-- Blocked by: GitHub CLI token for `crilsen` is invalid.
+- Last goal: Adopt the template, record the Backstage MVP plan, and publish the Git project.
+- Exact next action: Begin PRD-001 Foundation phase by selecting a current Backstage version and generating the local application.
+- Blocked by: None.
 - Resume prompt: `Read AGENTS.md and .ai/HANDOFF.md. Continue from the Resume block. Do not rediscover context.`
 
 ## Goal
 
-Create a portfolio-ready Git foundation and approved plan for the Backstage Internal Developer Platform MVP.
+Maintain the published portfolio foundation and implement PRD-001 when requested.
 
 ## Current State
 
-Context adoption, planning and local Git initialization are complete; remote publication awaits GitHub authentication.
+Context adoption, planning and remote publication are complete.
 
 ## What Was Done
 
 - Replaced template placeholders with observed repository state and approved scope.
 - Added README, `.gitignore`, `.env.example` and PRD-001.
+- Created and pushed the public repository `crilsen/internal-developer-platform`.
 
 ## Files Changed
 
@@ -46,12 +47,13 @@ Context adoption, planning and local Git initialization are complete; remote pub
 
 ## Problems / Risks
 
-- GitHub CLI authentication is invalid; remote creation requires user re-authentication.
+- None.
 
 ## Validation Performed
 
 - Reviewed the context template, repository inventory and GitHub CLI authentication state.
+- Confirmed the `main` branch was pushed and now tracks `origin/main`.
 
 ## Next Actions
 
-- Restore GitHub CLI authentication, then create and configure the remote repository.
+- Begin the implementation plan only when requested; the immediate first step is Backstage version/runtime selection.
