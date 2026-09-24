@@ -2,7 +2,7 @@
 
 ## Active
 
-- None.
+- Implement SPEC-001 / PRD-001: Backstage Internal Developer Platform MVP.
 
 ## Planned
 

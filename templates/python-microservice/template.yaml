@@ -1,0 +1,36 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-python-microservice
+  title: Create Python Microservice
+  description: Local-first Golden Path for a FastAPI service with Docker, CI, catalog metadata and TechDocs.
+  tags: [golden-path, python, fastapi, docker]
+spec:
+  owner: group:default/platform-team
+  type: service
+  parameters:
+    - title: Service details
+      required: [name, description, owner, system]
+      properties:
+        name:
+          title: Service Name
+          type: string
+          pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+        description: { title: Description, type: string }
+        owner: { title: Owner, type: string, default: group:default/platform-team }
+        system: { title: System, type: string, default: ecommerce-platform }
+  steps:
+    - id: fetch
+      name: Generate service skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values: { name: '${{ parameters.name }}', description: '${{ parameters.description }}', owner: '${{ parameters.owner }}', system: '${{ parameters.system }}' }
+    - id: debug
+      name: Review generated files
+      action: debug:log
+      input: { listWorkspace: true }
+  output:
+    text:
+      - title: Local Golden Path
+        content: Generated files are available in the Scaffolder workspace. Configure a repository publisher in a future GitHub integration.

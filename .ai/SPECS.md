@@ -69,6 +69,6 @@ Related decisions: ADR-NNN, TDR-NNN
 
 | ID | Title | Status | PRD | File |
 | --- | --- | --- | --- | --- |
-| - | - | - | - | - |
+| SPEC-001 | Backstage Internal Developer Platform MVP | Approved | PRD-001 | `docs/spec/001-backstage-idp-mvp.md` |
 
-_None yet._
+SPEC-001 records the implementation design approved by the requester.

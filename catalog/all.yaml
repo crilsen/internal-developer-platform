@@ -1,0 +1,106 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: commerce
+  description: Commerce business capabilities.
+spec:
+  owner: group:default/platform-team
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: ecommerce-platform
+  description: Services that power the ecommerce experience.
+spec:
+  owner: group:default/platform-team
+  domain: commerce
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: platform-team
+  description: Owns developer-platform capabilities and payment-api.
+spec:
+  type: team
+  profile:
+    displayName: Platform Team
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: checkout-team
+  description: Owns checkout-facing services.
+spec:
+  type: team
+  profile:
+    displayName: Checkout Team
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: frontend-api
+  description: Edge API for the ecommerce frontend.
+  tags: [python, fastapi, cloud-native, aws, kubernetes]
+  annotations:
+    backstage.io/techdocs-ref: dir:../docs/services/frontend-api
+  links:
+    - title: Source Code (future GitHub integration)
+      url: https://github.com/crilsen/internal-developer-platform
+spec:
+  type: service
+  lifecycle: production
+  owner: group:default/checkout-team
+  system: ecommerce-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: orders-api
+  description: Orders processing service.
+  tags: [python, fastapi, cloud-native, opentelemetry]
+  annotations:
+    backstage.io/techdocs-ref: dir:../docs/services/orders-api
+  links:
+    - title: Grafana dashboard (future integration)
+      url: https://grafana.com/
+spec:
+  type: service
+  lifecycle: production
+  owner: group:default/checkout-team
+  system: ecommerce-platform
+  providesApis: [orders-api-contract]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-api
+  description: Payment orchestration service.
+  tags: [python, fastapi, aws, kubernetes]
+  annotations:
+    backstage.io/techdocs-ref: dir:../docs/services/payment-api
+spec:
+  type: service
+  lifecycle: production
+  owner: group:default/platform-team
+  system: ecommerce-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: orders-api-contract
+  description: Contract for processing orders.
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:default/checkout-team
+  system: ecommerce-platform
+  definition: |
+    openapi: 3.0.3
+    info: { title: Orders API, version: 1.0.0 }
+    paths:
+      /orders/process:
+        get:
+          responses:
+            '200': { description: Order processed }

@@ -1,0 +1,6 @@
+.git
+.ai
+backstage/node_modules
+backstage/.yarn/cache
+**/__pycache__
+.env

@@ -6,8 +6,8 @@ Path for Python microservices.
 
 ## Status
 
-Planning and repository foundation. The Backstage application has not yet been
-generated; cloud integrations are deliberately out of scope for the MVP.
+Implementation in progress. The portal is container-first: `docker compose up --build`
+starts Backstage and PostgreSQL; cloud integrations remain out of scope for the MVP.
 
 ## Planned capabilities
 
@@ -72,3 +72,26 @@ production deployment.
 
 The approved MVP scope and staged implementation plan live in
 [`docs/prd/001-backstage-idp-mvp.md`](docs/prd/001-backstage-idp-mvp.md).
+
+## Run locally
+
+Prerequisite: Docker Desktop (or Docker Engine with the Compose plugin) must be running.
+
+```bash
+docker compose up --build
+```
+
+The first build downloads the Backstage dependencies and can take several minutes.
+When both services are healthy, open `http://localhost:7007`.
+
+Run in the background with `make up` (or `docker compose up --build -d`), inspect
+logs with `make logs`, and stop the environment with `make down`. To remove the
+local PostgreSQL data as well, run `make clean`.
+
+The Compose stack contains:
+
+- `backstage`: the portal, catalog, Scaffolder and TechDocs backend on port 7007;
+- `postgres`: the Backstage database, persisted in the `postgres-data` Docker volume.
+
+All runtime dependencies are containerized. Node and Yarn are only needed when
+developing the Backstage source outside the container.

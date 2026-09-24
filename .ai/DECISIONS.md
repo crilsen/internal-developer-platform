@@ -43,13 +43,36 @@ Consequences:
 
 | ID | Type | Title | Status | Date | File |
 | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - |
+| ADR-001 | ADR | Local-first Backstage MVP architecture | Accepted | 2026-09-24 | inline |
 
 ## Records
 
 In simple mode, add entries inline here. In scale mode, keep only the index above and create files under `docs/decisions/`.
 
-_None yet._
+## ADR-001 — Local-first Backstage MVP architecture
+
+Type: ADR
+Status: Accepted
+Date: 2026-09-24
+Owners: Platform team
+Supersedes: none
+
+Context:
+The portfolio MVP must demonstrate Backstage's catalog, templates and TechDocs
+without cloud accounts, GitHub credentials or production services.
+
+Decision:
+Use a Backstage standalone application under `backstage/`, local catalog files,
+local TechDocs generation/publishing and a local output path for the initial
+software template.
+
+Reasoning:
+This keeps the platform workflow self-contained while preserving extension
+points for GitHub, Kubernetes, Argo CD, observability and AWS.
+
+Consequences:
+The MVP is not a production deployment. GitHub publishing and cloud
+integrations are explicit future work.
 
 Do not backfill invented history. Record decisions that are observed, expressly documented, or approved during future work.
 

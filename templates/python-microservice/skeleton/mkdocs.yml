@@ -1,0 +1,2 @@
+site_name: ${{ values.name }}
+nav: [{Overview: docs/index.md}]
