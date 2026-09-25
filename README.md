@@ -6,8 +6,8 @@ Path for Python microservices.
 
 ## Status
 
-Implementation in progress. The portal is container-first: `docker compose up --build`
-starts Backstage, PostgreSQL and Keycloak; cloud integrations remain out of scope for the MVP.
+The portal is container-first: `docker compose up --build` starts Backstage,
+PostgreSQL and Keycloak. Cloud integrations remain out of scope for this MVP.
 
 ## Planned capabilities
 
@@ -53,13 +53,18 @@ This means a developer asks for a capability and receives an organization-wide
 standard path instead of manually assembling repository structure, CI, Docker,
 documentation and catalog metadata.
 
-## Demo scenario (planned)
+## Demo scenario
 
 1. In Backstage, select **Create Python Microservice**.
 2. Enter `inventory-api`, its description, owner and system.
 3. Generate the service structure and inspect `catalog-info.yaml`.
 4. Run the FastAPI service and tests.
 5. Open its TechDocs from the catalog.
+
+The local publisher writes generated services to `generated-services/` and
+registers the generated `catalog-info.yaml` in the running catalog. GitHub
+repository creation is intentionally optional and is not required for this
+local flow.
 
 ## Roadmap
 
@@ -104,3 +109,51 @@ The Compose stack contains:
 
 All runtime dependencies are containerized. Node and Yarn are only needed when
 developing the Backstage source outside the container.
+
+### Persistence
+
+The Compose file declares three named volumes:
+
+| Volume | Stores | Removed by |
+| --- | --- | --- |
+| `postgres-data` | Catalog, Scaffolder and Backstage plugin data | `make clean` |
+| `keycloak-data` | Realm, users and login configuration | `make clean` |
+| `techdocs-data` | Generated TechDocs output | `make clean` |
+
+`make down` preserves these volumes. Use `make clean` only when intentionally
+resetting the demo environment.
+
+### Useful commands
+
+```bash
+make install  # build the container image
+make up       # build and start in background
+make logs     # follow all service logs
+make down     # stop containers and preserve data
+make clean    # stop and delete volumes
+```
+
+To run the generated service independently after creating it:
+
+```bash
+docker compose -f generated-services/inventory-api/compose.yaml up --build
+```
+
+The generated service exposes `GET /health` and `GET /` on port 8000.
+
+### Troubleshooting
+
+- **Docker socket unavailable:** start Docker Desktop, confirm `docker info`
+  works, then retry `make up`.
+- **Port 7007 or 8080 already in use:** stop the process/container using the
+  port, or change the host-side port mapping in `docker-compose.yml`.
+- **Login fails after changing Keycloak data:** run `make clean` and `make up`
+  to re-import the disposable realm and demo user.
+- **Catalog still shows an old entity:** restart the stack with `make down`
+  followed by `make up`; static catalog locations may be cached by Backstage.
+- **Template output already exists:** remove only the generated test directory
+  `generated-services/inventory-api` and run the template again.
+
+The Keycloak account `crilsen/crilsen`, client secret and local admin account
+`admin/admin` are demo credentials. Do not reuse them outside this local
+portfolio environment.
