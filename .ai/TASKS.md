@@ -2,17 +2,15 @@
 
 ## Active
 
-- Finish E2E validation of the container-first Backstage MVP after deploying the latest image.
-- Verify the new local file-location support allows the Software Template to register `inventory-api`.
+- None — container-first Backstage MVP E2E validated on 2026-09-25.
 
 ## Planned
 
-- Rebuild/start Compose, run OAuth/catalog/TechDocs/template smoke test, then inspect generated catalog entity.
-- Review pending diff, commit and push the completed changes.
+- Commit this HANDOFF/TASKS checkpoint if desired; otherwise keep stack running or `docker compose down` (volumes preserved).
 
 ## Blocked
 
-- Docker socket is currently unavailable (`permission denied`); Docker Desktop must be started before the pending E2E run.
+- None.
 
 ## Completed
 
@@ -21,4 +19,4 @@
 - Containerized Backstage/PostgreSQL/Keycloak with persistent Compose volumes and documented credentials/startup.
 - Verified OAuth login, authenticated catalog access and TechDocs rendering on the previous image.
 - Added local scaffolder publisher and catalog file-location support; TypeScript compilation passed.
-- Generated `generated-services/inventory-api` during template testing; final catalog registration remains pending the new image.
+- Deployed fresh image with `localCatalogLocations` and validated full E2E: OAuth identity, 4 catalog components (incl. `inventory-api`), TechDocs sync/HTML for `orders-api`, template task `completed` with `file:` registration.
