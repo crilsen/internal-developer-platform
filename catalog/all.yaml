@@ -24,7 +24,19 @@ spec:
   type: team
   profile:
     displayName: Platform Team
+  members: [crilsen]
   children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: crilsen
+  description: Local portfolio administrator.
+spec:
+  profile:
+    displayName: Cristiano Nilsen
+    email: crilsen@local.test
+  memberOf: [platform-team]
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Group
@@ -36,55 +48,6 @@ spec:
   profile:
     displayName: Checkout Team
   children: []
----
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  name: frontend-api
-  description: Edge API for the ecommerce frontend.
-  tags: [python, fastapi, cloud-native, aws, kubernetes]
-  annotations:
-    backstage.io/techdocs-ref: dir:../docs/services/frontend-api
-  links:
-    - title: Source Code (future GitHub integration)
-      url: https://github.com/crilsen/internal-developer-platform
-spec:
-  type: service
-  lifecycle: production
-  owner: group:default/checkout-team
-  system: ecommerce-platform
----
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  name: orders-api
-  description: Orders processing service.
-  tags: [python, fastapi, cloud-native, opentelemetry]
-  annotations:
-    backstage.io/techdocs-ref: dir:../docs/services/orders-api
-  links:
-    - title: Grafana dashboard (future integration)
-      url: https://grafana.com/
-spec:
-  type: service
-  lifecycle: production
-  owner: group:default/checkout-team
-  system: ecommerce-platform
-  providesApis: [orders-api-contract]
----
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  name: payment-api
-  description: Payment orchestration service.
-  tags: [python, fastapi, aws, kubernetes]
-  annotations:
-    backstage.io/techdocs-ref: dir:../docs/services/payment-api
-spec:
-  type: service
-  lifecycle: production
-  owner: group:default/platform-team
-  system: ecommerce-platform
 ---
 apiVersion: backstage.io/v1alpha1
 kind: API

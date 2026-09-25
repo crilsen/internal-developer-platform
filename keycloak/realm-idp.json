@@ -1,0 +1,6 @@
+{
+  "realm": "idp",
+  "enabled": true,
+  "clients": [{"clientId":"backstage","enabled":true,"protocol":"openid-connect","publicClient":false,"secret":"backstage-local-secret","redirectUris":["http://localhost:7007/api/auth/keycloak/handler/frame"],"webOrigins":["http://localhost:7007"]}],
+  "users": [{"username":"crilsen","enabled":true,"emailVerified":true,"email":"crilsen@local.test","firstName":"Cristiano","lastName":"Nilsen","credentials":[{"type":"password","value":"crilsen","temporary":false}]}]
+}

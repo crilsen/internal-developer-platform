@@ -1,4 +1,21 @@
 services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1
+    command: start-dev --import-realm
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: http://localhost:8080
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
+    ports: ["8080:8080"]
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+      - ./keycloak/realm-idp.json:/opt/keycloak/data/import/realm-idp.json:ro
+    healthcheck:
+      test: ["CMD", "/bin/bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/8080"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
   postgres:
     image: postgres:16-alpine
     environment:
@@ -16,13 +33,20 @@ services:
       context: .
       dockerfile: backstage/Dockerfile
     ports: ["7007:7007"]
+    volumes:
+      - techdocs-data:/app/techdocs-data
+      - ./generated-services:/app/generated-services
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: "5432"
       POSTGRES_USER: backstage
       POSTGRES_PASSWORD: backstage
     depends_on:
+      keycloak:
+        condition: service_healthy
       postgres:
         condition: service_healthy
 volumes:
   postgres-data:
+  keycloak-data:
+  techdocs-data:

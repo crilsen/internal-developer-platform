@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: orders-api
+  description: Orders processing service.
+  tags: [python, fastapi, cloud-native, opentelemetry]
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - title: Source Code
+      url: https://github.com/crilsen/internal-developer-platform
+spec:
+  type: service
+  lifecycle: production
+  owner: group:default/checkout-team
+  system: ecommerce-platform
+  providesApis: [orders-api-contract]

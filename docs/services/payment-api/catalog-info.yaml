@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-api
+  description: Payment orchestration service.
+  tags: [python, fastapi, aws, kubernetes]
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - title: Source Code
+      url: https://github.com/crilsen/internal-developer-platform
+spec:
+  type: service
+  lifecycle: production
+  owner: group:default/platform-team
+  system: ecommerce-platform

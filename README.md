@@ -7,7 +7,7 @@ Path for Python microservices.
 ## Status
 
 Implementation in progress. The portal is container-first: `docker compose up --build`
-starts Backstage and PostgreSQL; cloud integrations remain out of scope for the MVP.
+starts Backstage, PostgreSQL and Keycloak; cloud integrations remain out of scope for the MVP.
 
 ## Planned capabilities
 
@@ -82,16 +82,25 @@ docker compose up --build
 ```
 
 The first build downloads the Backstage dependencies and can take several minutes.
-When both services are healthy, open `http://localhost:7007`.
+When the services are ready, open `http://localhost:7007`, choose **Sign in using
+Keycloak**, and use the local demo account `crilsen` / `crilsen`. Keycloak is
+available at `http://localhost:8080`. These credentials and the local client
+secret are for a disposable portfolio demo only; never expose this Compose
+stack to a public network as-is.
 
 Run in the background with `make up` (or `docker compose up --build -d`), inspect
 logs with `make logs`, and stop the environment with `make down`. To remove the
-local PostgreSQL data as well, run `make clean`.
+local persisted data as well, run `make clean` (destructive).
 
 The Compose stack contains:
 
 - `backstage`: the portal, catalog, Scaffolder and TechDocs backend on port 7007;
-- `postgres`: the Backstage database, persisted in the `postgres-data` Docker volume.
+- `postgres`: the Backstage database, persisted in the `postgres-data` Docker volume;
+- `keycloak`: local identity provider on port 8080, persisted in `keycloak-data`.
+
+`make down` stops containers without deleting the database or Keycloak realm.
+`make up` starts them again. Generated TechDocs files are persisted in the
+`techdocs-data` volume. The Markdown source stays versioned in `docs/services/`.
 
 All runtime dependencies are containerized. Node and Yarn are only needed when
 developing the Backstage source outside the container.

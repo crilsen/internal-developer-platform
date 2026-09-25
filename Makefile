@@ -1,10 +1,10 @@
 .PHONY: install dev up down logs clean
 
 install:
-	cd backstage && yarn install --immutable
+	docker compose build
 
 dev:
-	cd backstage && yarn start
+	docker compose up --build
 
 up:
 	docker compose up --build -d

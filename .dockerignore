@@ -2,5 +2,6 @@
 .ai
 backstage/node_modules
 backstage/.yarn/cache
+generated-services
 **/__pycache__
 .env

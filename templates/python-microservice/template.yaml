@@ -26,11 +26,16 @@ spec:
       input:
         url: ./skeleton
         values: { name: '${{ parameters.name }}', description: '${{ parameters.description }}', owner: '${{ parameters.owner }}', system: '${{ parameters.system }}' }
-    - id: debug
-      name: Review generated files
-      action: debug:log
-      input: { listWorkspace: true }
+    - id: publish
+      name: Publish service locally
+      action: publish:local
+      input:
+        name: '${{ parameters.name }}'
   output:
+    links:
+      - title: Open in catalog
+        icon: catalog
+        entityRef: '${{ steps.publish.output.entityRef }}'
     text:
       - title: Local Golden Path
-        content: Generated files are available in the Scaffolder workspace. Configure a repository publisher in a future GitHub integration.
+        content: 'Generated files are available in ${{ steps.publish.output.path }} on the host. Run the generated service with Docker Compose from that directory.'

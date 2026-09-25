@@ -7,6 +7,8 @@
  */
 
 import { createBackend } from '@backstage/backend-defaults';
+import { localCatalogLocations } from './localCatalogLocations';
+import { localPublisher } from './localPublisher';
 
 const backend = createBackend();
 
@@ -15,6 +17,7 @@ backend.add(import('@backstage/plugin-proxy-backend'));
 
 // scaffolder plugin
 backend.add(import('@backstage/plugin-scaffolder-backend'));
+backend.add(localPublisher);
 backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));
 backend.add(
   import('@backstage/plugin-scaffolder-backend-module-notifications'),
@@ -26,11 +29,13 @@ backend.add(import('@backstage/plugin-techdocs-backend'));
 // auth plugin
 backend.add(import('@backstage/plugin-auth-backend'));
 // See https://backstage.io/docs/backend-system/building-backends/migrating#the-auth-plugin
-backend.add(import('@backstage/plugin-auth-backend-module-guest-provider'));
-// See https://backstage.io/docs/auth/guest/provider
+backend.add(
+  import('@backstage-community/plugin-auth-backend-module-keycloak-provider'),
+);
 
 // catalog plugin
 backend.add(import('@backstage/plugin-catalog-backend'));
+backend.add(localCatalogLocations);
 backend.add(
   import('@backstage/plugin-catalog-backend-module-scaffolder-entity-model'),
 );
